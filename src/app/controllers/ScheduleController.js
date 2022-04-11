@@ -6,7 +6,6 @@ class ScheduleController{
     async updateOne(request,response){
         try {
             const {newDataSource}=request.body;
-            console.log(newDataSource)
             for(var data of newDataSource){
                 if(data._id)
                 {

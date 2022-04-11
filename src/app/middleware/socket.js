@@ -6,7 +6,6 @@ const Messages = require("../models/MessageModel");
 const { v4: uuidv4 } = require("uuid");
 module.exports = (io) => {
   io.on("connection", function (socket) {
-    console.log(socket.id)
 
     socket.on("getDoctors", async ({ _id }) => {
       var doctors = await doctorModel.find({});

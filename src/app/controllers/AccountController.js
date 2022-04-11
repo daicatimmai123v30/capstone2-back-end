@@ -192,6 +192,7 @@ class AccountController {
                     return response.json({success:false,messege:'User not found'});
                 else{
                     const authentication =await authModel.findOne({_id:owner.idNumber});
+
                     response.json({
                         success:true,
                         user:{
@@ -200,7 +201,6 @@ class AccountController {
                             firstName:owner.firstName,
                             lastName:owner.lastName,
                             dateOfBirth:owner.dateOfBirth,
-                            phoneNumber:owner.phoneNumber,
                             gender:owner.gender,
                             image:process.env.API_URL+ owner.image,
                             street:owner.street,
@@ -209,7 +209,7 @@ class AccountController {
                             ward:owner.ward,
                             zipCode:owner.zipCode,
                             idSocket:owner?.idSocket,
-                            role:'USER'
+                            role:'USER',
                         },
                         message:'Kiểm tra token thành công'
                     });

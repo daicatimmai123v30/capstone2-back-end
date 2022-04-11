@@ -11,6 +11,7 @@ const PetRoute = require('./PetRoute');
 const ScheduleRoute = require('./ScheduleRoute')
 const ClinicRoute = require('./ClinicRoute');
 const LiquidationRoute = require('./LiquidationRoute');
+const StatisticalRoute = require('./StatisticalRoute')
 const fs = require('fs');
 const path = require('path');
 
@@ -32,6 +33,7 @@ function route(app) {
     app.use('/api/Schedule', ScheduleRoute);
     app.use('/api/Clinic', ClinicRoute);
     app.use('/api/Liquidation', LiquidationRoute)
+    app.use('/api/Statistical', StatisticalRoute)
     app.post('/test', (request, response) => {
         console.log(request.body.items);
         return response.json({})
