@@ -7,16 +7,14 @@ const handlebars = require('express-handlebars');
 const route = require('./routes');
 const db = require('./config/db/index');
 const http = require('http');
-const socketio = require('socket.io');
+// const socketio = require('socket.io');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
 
 
 require('dotenv').config();
 
-
-const server = http.createServer();
-const io = socketio(app);
+// const io = socketio(app);
 // Init our socket
 
 db.connection();
@@ -53,7 +51,7 @@ app.set('views', path.join(__dirname, 'resources/views'));
 route(app);
 
 // middleware
-require('./app/middleware/socket')(io);
+// require('./app/middleware/socket')(io);
 
 
 
