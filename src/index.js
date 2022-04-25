@@ -16,15 +16,12 @@ require('dotenv').config();
 
 
 const server = http.createServer();
-const io = socketio(server, {
+const io = socketio(app, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"]
   }
 });
-server.listen(4441);
-
-
 // Init our socket
 
 db.connection();
