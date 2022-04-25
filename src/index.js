@@ -41,7 +41,7 @@ app.use(session({
   resave: true,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/Artemis'
+    mongoUrl: process.env.DATABASE_LOCAL
   })
 }));
 // Http logger
