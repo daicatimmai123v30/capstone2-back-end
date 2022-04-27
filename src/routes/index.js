@@ -34,8 +34,8 @@ function route(app) {
     app.use('/api/Clinic', ClinicRoute);
     app.use('/api/Liquidation', LiquidationRoute)
     app.use('/api/Statistical', StatisticalRoute)
-    app.post('/test', (request, response) => {
-        console.log(request.body.items);
+    app.post('/api/location', (request, response) => {
+        console.log(request);
         return response.json({})
     })
     //Reading and Writing file 
