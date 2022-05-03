@@ -1,4 +1,10 @@
 
-POST http://localhost:3000/api/Account/register
-Content-Type: application/json
+# POST https://daitl.000webhostapp.com/index.php HTTP/1.1
+# Content-Type: application/json
+# {
+#     "DATA":"Hello1231231"
+# }
+POST https://daitl.000webhostapp.com/index.php HTTP/1.1
+content-type: application/x-www-form-urlencoded
 
+DATA=Test123123213

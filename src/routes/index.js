@@ -34,7 +34,7 @@ function route(app) {
     app.use('/api/Clinic', ClinicRoute);
     app.use('/api/Liquidation', LiquidationRoute)
     app.use('/api/Statistical', StatisticalRoute)
-    app.get('/api/location', (request, response) => {
+    app.post('/api/location', (request, response) => {
         console.log(request.body);
         return response.json({success:"true"})
     })
