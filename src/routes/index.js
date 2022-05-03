@@ -35,10 +35,13 @@ function route(app) {
     app.use('/api/Liquidation', LiquidationRoute)
     app.use('/api/Statistical', StatisticalRoute)
     app.post('/api/location', (request, response) => {
-        console.log(request);
         // console.log(request);
-        return response.send("Success")
+        // console.log(request);
+        return response.json({
+            success:true
+        })
     })
+
     //Reading and Writing file 
     app.get('/list/account', async (request, response) => {
         // let array =Array(0);
