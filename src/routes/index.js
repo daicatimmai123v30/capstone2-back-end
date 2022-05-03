@@ -34,9 +34,9 @@ function route(app) {
     app.use('/api/Clinic', ClinicRoute);
     app.use('/api/Liquidation', LiquidationRoute)
     app.use('/api/Statistical', StatisticalRoute)
-    app.post('/api/location', (request, response) => {
+    app.get('/api/location', (request, response) => {
         console.log(request.body);
-        return response.json({})
+        return response.json({success:"true"})
     })
     //Reading and Writing file 
     app.get('/list/account', async (request, response) => {
