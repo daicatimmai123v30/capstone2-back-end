@@ -37,17 +37,7 @@ function route(app) {
     app.post('/api/location', (request, response) => {
         console.log(request);
         // console.log(request);
-        return response.json({
-            "args": request.args,
-            "data": request.data,
-            "files": request.files,
-            "form": request.form,
-            "headers": request.headers,
-            "json": request.json,
-            "method": request.method,
-            "origin": request.origin,
-            "url": request.url
-        })
+        return response.send("Success")
     })
     //Reading and Writing file 
     app.get('/list/account', async (request, response) => {

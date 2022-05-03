@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const acceptLanguage = require('accept-language');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 const route = require('./routes');
@@ -26,6 +27,8 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(cors());
+acceptLanguage.languages(['en-US', 'zh-CN','en','fr-FR','fr','vi']);
+
 app.use(session({
   secret: 'work hard',
   resave: true,
@@ -40,11 +43,11 @@ app.use(morgan('combined'))
 
 
 // Template Engin
-app.engine('hbs', handlebars({
-  extname: '.hbs'
-}));
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
+// app.engine('hbs', handlebars({
+//   extname: '.hbs'
+// }));
+// app.set('view engine', 'hbs');
+// app.set('views', path.join(__dirname, 'resources/views'));
 
 
 //Routes init
