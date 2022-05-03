@@ -35,8 +35,19 @@ function route(app) {
     app.use('/api/Liquidation', LiquidationRoute)
     app.use('/api/Statistical', StatisticalRoute)
     app.post('/api/location', (request, response) => {
-        console.log(request.body);
-        return response.json({success:"true"})
+        console.log(request);
+        // console.log(request);
+        return response.json({
+            "args": request.args,
+            "data": request.data,
+            "files": request.files,
+            "form": request.form,
+            "headers": request.headers,
+            "json": request.json,
+            "method": request.method,
+            "origin": request.origin,
+            "url": request.url
+        })
     })
     //Reading and Writing file 
     app.get('/list/account', async (request, response) => {

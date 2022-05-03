@@ -4,7 +4,8 @@
 # {
 #     "DATA":"Hello1231231"
 # }
-POST https://daitl.000webhostapp.com/index.php HTTP/1.1
-content-type: application/x-www-form-urlencoded
+POST http://httpbin.org/anything HTTP/1.1
+content-type: text/plain
 
-DATA=Test123123213
+Test123123213
+
