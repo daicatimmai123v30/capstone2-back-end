@@ -68,6 +68,30 @@ function route(app) {
 
 
     })
+
+    app.get('/api/search1', async (req, res) => {
+        const {
+            titleProduct,
+            priceProduct,
+            amountProduct
+        } = req.body;
+
+        console.log('xyz')
+        const data = await LiquidationModel.findOne({
+            titleProduct: new RegExp('^' + titleProduct + '$' + "i")
+        }, function(err, doc){
+            
+        })
+
+
+
+       
+
+        console.log('abc')
+        console.log(data);
+
+
+    })
     //Reading and Writing file 
     app.get('/list/account', async (request, response) => {
         // let array =Array(0);
