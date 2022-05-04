@@ -4,8 +4,10 @@
 # {
 #     "DATA":"Hello1231231"
 # }
-POST http://httpbin.org/anything HTTP/1.1
-content-type: text/plain
+POST http://back-end-artemis.herokuapp.com/api/location HTTP/1.1
+content-type: application/json
 
-Test123123213
+{
+    "test":"value"
+}
 
