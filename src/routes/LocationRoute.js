@@ -39,6 +39,23 @@ router.post('/', auth,async(request, response) => {
     }
 })
 
+router.get('/', auth,async(request, response) => {
+    try {
+        const findDevice = await DeviceModel.find({
+            idOwner:request.userId
+        });
+        return response.json({
+            success:true,
+            devices : findDevice
+        })
+    } catch (error) {
+        console.log(error)
+        return response.json({
+            success:false,
+            messages:'Lỗi server'
+        })
+    }
+})
 
 
 

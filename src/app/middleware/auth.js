@@ -5,6 +5,7 @@ require('dotenv').config();
 const verifyToken = (request, response, next) => {
     const autHeader = request.header('Authorization');//'' null undefine 
     const token = autHeader && autHeader.split(' ')[1]; //Bearer jdbhdfgbdìhỉuthủihffhighfdibgeihừ
+
     if (!token)
         return response.json({
             sucess: false,
