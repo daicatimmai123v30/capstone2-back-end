@@ -57,6 +57,22 @@ router.get('/', auth,async(request, response) => {
     }
 })
 
+router.get('/:id',auth,async(request, response) => {
+    try {
+        const findDevice = await DeviceModel.findById(request.params.id);
+        return response.json({
+            success:true,
+            device: findDevice
+        })
+    } catch (error) {
+        console.log(error)
+        return response.json({
+            success:false,
+            messages:'Lỗi server'
+        })
+    }
+})
+
 
 
 module.exports=router;
