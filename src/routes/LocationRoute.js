@@ -6,7 +6,7 @@ const DeviceModel = require('../app/models/DeviceModel');
 const auth = require('../app/middleware/auth')
 
 
-router.post('/', auth,async(request, response) => {
+router.post('/create', auth,async(request, response) => {
     const {IMEI,name} = request.body;
     try {
         const findOwner = await DeviceModel.find({
@@ -30,6 +30,26 @@ router.post('/', auth,async(request, response) => {
                 device: newDevice
             })
         }
+    } catch (error) {
+        console.log(error)
+        return response.json({
+            success:false,
+            messages:'Lỗi server'
+        })
+    }
+})
+
+router.post('/',async(request, response) => {
+    const {IMEI,lat,lon} = request.body;
+    try {
+        const updateDevice = await DeviceModel.updateMany({
+            IMEI
+        },{longitude:lon, latitude:lat,modifiedDate: new Date()},{new:true});
+        console.log(updateDevice);
+        return response.json({
+            success:true
+        })
+        
     } catch (error) {
         console.log(error)
         return response.json({

@@ -5,7 +5,6 @@ const DeviceModel = new Schema({
     IMEI: {
         type: String,
         default: '',
-        unique:true,
     },
     name: {
         type: String,

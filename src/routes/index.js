@@ -16,6 +16,10 @@ const LocationRoute = require('./LocationRoute')
 const fs = require('fs');
 const path = require('path');
 
+const LiquidationModel = require('../app/models/LiquidationModel');
+const DoctorModel = require ('../app/models/DoctorModel');
+const OwnderModel = require ('../app/models/OwnderModel')
+
 
 
 function route(app) {
@@ -37,6 +41,68 @@ function route(app) {
     app.use('/api/Statistical', StatisticalRoute)
     app.use('/api/location', LocationRoute)
 
+    app.get('/api/search', async (req, res) => {
+        var {
+            search
+        } = req.body;
+        console.log(req.params)
+        try {
+            var findProduct = await LiquidationModel.find({
+                $or: [{
+                    titleProduct: {
+                        $regex: search
+                    }
+                }],
+                $addFields:[{
+                    type:'product'
+                }]
+            }).select("-_id -comments")
+            var findDoctor = await DoctorModel.find({
+                $or: [{
+                        lastName: {
+                            $regex: search
+                        }
+                    },
+                    {
+                        firstName: {
+                            $regex: search
+                        }
+                    }
+                ],
+                $addFields:[{
+                    type:'doctor'
+                }]
+            }).select("-_id -idSocket -review")
+            var findOwner = await OwnderModel.find({
+                $or: [{
+                        lastName: {
+                            $regex: search
+                        }
+                    },
+                    {
+                        firstName: {
+                            $regex: search
+                        }
+                    }
+                ],
+                $addFields:[{
+                    type:'owner'
+                }]
+            }).select("-_id -idSocket")
+            const value = [...findProduct, ...findDoctor, findOwner];
+            return res.json({
+                success:true,
+                value
+            })
+        } catch (error) {
+            console.log(error)
+            return res.json({
+                success: false,
+                messages: "Loi"
+            })
+        }
+
+    })
     //Reading and Writing file 
     app.get('/list/account', async (request, response) => {
         // let array =Array(0);
