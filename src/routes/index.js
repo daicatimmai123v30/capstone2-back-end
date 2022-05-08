@@ -18,7 +18,7 @@ const path = require('path');
 
 const LiquidationModel = require('../app/models/LiquidationModel');
 const DoctorModel = require ('../app/models/DoctorModel');
-const OwnderModel = require ('../app/models/OwnderModel')
+const OwnderModel = require ('../app/models/OwnerModel')
 
 
 
