@@ -18,7 +18,8 @@ const path = require('path');
 
 const LiquidationModel = require('../app/models/LiquidationModel');
 const DoctorModel = require ('../app/models/DoctorModel');
-const OwnderModel = require ('../app/models/OwnerModel')
+const OwnderModel = require ('../app/models/OwnerModel');
+const auth = require('../app/middleware/auth');
 
 
 
@@ -42,54 +43,65 @@ function route(app) {
     app.use('/api/location', LocationRoute)
 
     app.get('/api/search', async (req, res) => {
-        var {
-            search
-        } = req.body;
-        console.log(req.params)
+        var search = req.query.query;
         try {
-            var findProduct = await LiquidationModel.find({
-                $or: [{
-                    titleProduct: {
-                        $regex: search
+            var findProduct = await LiquidationModel.aggregate([
+                {
+                    $match:{
+                        $or: [{
+                            titleProduct: {
+                                $regex: search
+                            }
+                        }]
                     }
-                }],
-                $addFields:[{
-                    type:'product'
-                }]
-            }).select("-_id -comments")
-            var findDoctor = await DoctorModel.find({
-                $or: [{
-                        lastName: {
-                            $regex: search
-                        }
-                    },
-                    {
-                        firstName: {
-                            $regex: search
-                        }
+                },{
+                    $addFields:{
+                        type:'product'
                     }
-                ],
-                $addFields:[{
-                    type:'doctor'
-                }]
-            }).select("-_id -idSocket -review")
-            var findOwner = await OwnderModel.find({
-                $or: [{
-                        lastName: {
-                            $regex: search
-                        }
-                    },
-                    {
-                        firstName: {
-                            $regex: search
-                        }
+                }
+            ]).exec();
+            var findDoctor = await DoctorModel.aggregate([
+                {
+                    $addFields:{
+                        type:'doctor'
                     }
-                ],
-                $addFields:[{
-                    type:'owner'
-                }]
-            }).select("-_id -idSocket")
-            const value = [...findProduct, ...findDoctor, findOwner];
+                },{
+                    $match:{
+                        $or: [{
+                                lastName: {
+                                    $regex: search
+                                }
+                            },
+                            {
+                                firstName: {
+                                    $regex: search
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]).exec();
+            var findOwner = await OwnderModel.aggregate([
+                {
+                    $addFields:{
+                        type:'owner'
+                    }
+                },
+                {
+                    $match:{
+                        $or:[{
+                            lastName:{
+                                $regex:search
+                            },
+                        },{
+                            firstName:{
+                                $regex:search
+                            }
+                        }]
+                    }
+                }
+            ]).exec();
+            const value = [...findProduct, ...findDoctor,...findOwner];
             return res.json({
                 success:true,
                 value
