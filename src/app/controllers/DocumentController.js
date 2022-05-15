@@ -28,6 +28,38 @@ class DocumentController{
             })
         }
     }
+    async find(request,response){
+        try {
+            const documents = await DocumentModel.find({});
+
+            return  response.json({
+                success:true,
+                messages : '',
+                documents
+            })
+        } catch (error) {
+            return response.json({
+                success:false,
+                messages : 'Lỗi server'
+            })
+        }
+    }
+    async findById(request,response){
+        try {
+            const document = await DocumentModel.findById(request.params.id);
+
+            return  response.json({
+                success:true,
+                messages : '',
+                document
+            })
+        } catch (error) {
+            return response.json({
+                success:false,
+                messages : 'Lỗi server'
+            })
+        }
+    }
 }
 
 module.exports= new DocumentController;
