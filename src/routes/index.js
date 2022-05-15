@@ -12,13 +12,15 @@ const ScheduleRoute = require('./ScheduleRoute')
 const ClinicRoute = require('./ClinicRoute');
 const LiquidationRoute = require('./LiquidationRoute');
 const StatisticalRoute = require('./StatisticalRoute');
-const LocationRoute = require('./LocationRoute')
+const LocationRoute = require('./LocationRoute');
+const DocumentRoute = require('./DocumentRoute')
 const fs = require('fs');
 const path = require('path');
 
 const LiquidationModel = require('../app/models/LiquidationModel');
 const DoctorModel = require ('../app/models/DoctorModel');
 const OwnderModel = require ('../app/models/OwnerModel');
+
 const auth = require('../app/middleware/auth');
 
 
@@ -41,7 +43,7 @@ function route(app) {
     app.use('/api/Liquidation', LiquidationRoute)
     app.use('/api/Statistical', StatisticalRoute)
     app.use('/api/location', LocationRoute)
-
+    app.use('/api/Document',DocumentRoute)
     app.get('/api/search', async (req, res) => {
         var search = req.query.query;
         try {
