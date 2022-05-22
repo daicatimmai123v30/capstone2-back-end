@@ -44,6 +44,23 @@ function route(app) {
     app.use('/api/Statistical', StatisticalRoute)
     app.use('/api/location', LocationRoute)
     app.use('/api/Document',DocumentRoute)
+    app.get('/api/test',(request,response)=>{
+        try {
+
+            console.log(request.body);
+            const {username,password} = request.body
+            .findOne({username:username,password:password})
+            return response.json({
+                success:true,
+                data:{}
+            })
+        } catch (error) {
+            return response.json({
+                success:false,
+                messages:'Loi server'
+            })
+        }
+    })
     app.get('/api/search', async (req, res) => {
         var search = req.query.query;
         try {

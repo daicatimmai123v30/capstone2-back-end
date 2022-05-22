@@ -34,6 +34,8 @@ router.post('/register',accountController.register);
 router.post('/login',accountController.login);
 router.post('/registerByAccount',auth,accountController.registerByAccount);
 router.post('/information',auth,upload.single('image'),accountController.createInformation);
+router.get('/all',auth,accountController.findAll);
+router.delete('/:id',auth,accountController.deleteOne);
 router.get('/:id',auth,accountController.getOne);
 router.get('/',auth,accountController.checkToken);
 

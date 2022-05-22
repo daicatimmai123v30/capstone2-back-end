@@ -5,6 +5,7 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const authModel =require('../models/AuthenticationModel');
 const OwnerModel = require('../models/OwnerModel');
+const { json } = require('body-parser');
 
 
 class AccountController {
@@ -458,6 +459,70 @@ class AccountController {
                     doctor:newDoctor
                 })
             }
+        } catch (error) {
+            console.log(error.toString())
+            return response.json({
+                success:false,
+                messages:'Lỗi server'
+            })
+        }
+    }
+     //[GET] /api/Account/all
+     async findAll(request,response){
+        const {pg} = request.query;
+        try {
+            const countDoctor = await doctorModel.find({}).count();
+            const findDoctor = await doctorModel.find({})
+                                                .select('-review')
+                                                .populate({
+                                                    path:'account',
+                                                    select: 'username role',
+                                                })
+                                                .skip((pg-1)*5)
+                                                .limit(5).exec();
+                                                ;
+            const countOwner = await OwnerModel.find({}).count();
+            const findOwner = await OwnerModel.find({})
+                                              .populate({
+                                                  path:'idNumber',
+                                                  select:'phoneNumber',
+                                              })
+                                              .skip((pg-1) * 5)
+                                              .limit(5)
+
+
+            return response.json({
+                doctor:{
+                    total:countDoctor,
+                    account:findDoctor
+                },
+                owner:{
+                    total:countOwner,
+                    account:findOwner
+                }
+            })
+        } catch (error) {
+            console.log(error.toString())
+            return response.json({
+                success:false,
+                messages:'Lỗi server'
+            })
+        }
+    }
+    async deleteOne(request,response){
+        const {id} = request.params;
+        try {
+            const findDoctor = await doctorModel.findByIdAndDelete(id,{new:true});
+            const  findOwner = await OwnerModel.findByIdAndDelete(id,{new:true});
+            const findAccount  = await accountModel.findByIdAndDelete(findDoctor?._id);
+            const findAuth = await authModel.findByIdAndDelete(findOwner?._id)
+            return response.json({
+                success:true,
+                message:'Xóa thành công',
+                findDoctor,
+                findOwner
+
+            })
         } catch (error) {
             console.log(error.toString())
             return response.json({
